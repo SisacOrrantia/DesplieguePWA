@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  pwa:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: task-manager-pwa
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # Montar certificados SSL (generados por Certbot en el host)
+      - /etc/letsencrypt/live/${DOMAIN}/fullchain.pem:/etc/ssl/certs/fullchain.pem:ro
+      - /etc/letsencrypt/live/${DOMAIN}/privkey.pem:/etc/ssl/private/privkey.pem:ro
+      # Para la renovacion de Certbot
+      - certbot-webroot:/var/www/certbot:ro
+    environment:
+      - DOMAIN=${DOMAIN}
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  certbot:
+    image: certbot/certbot:latest
+    container_name: certbot
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+      - certbot-webroot:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+volumes:
+  certbot-webroot:
