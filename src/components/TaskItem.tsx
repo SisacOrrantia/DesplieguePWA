@@ -1,4 +1,5 @@
 import { Task } from '../types/Task'
+import { IconX } from './Icons'
 
 interface TaskItemProps {
   task: Task
@@ -46,7 +47,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete }) 
         aria-label="Eliminar tarea"
         title="Eliminar"
       >
-        ✕
+        <IconX />
       </button>
     </div>
   )

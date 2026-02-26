@@ -1,5 +1,6 @@
 import { Task, FilterType } from '../types/Task'
 import { TaskItem } from './TaskItem'
+import { IconEmpty } from './Icons'
 
 interface TaskListProps {
   tasks: Task[]
@@ -40,8 +41,9 @@ export const TaskList: React.FC<TaskListProps> = ({
 
       {tasks.length === 0 ? (
         <div className="empty-state">
-          <p>🎉 No hay tareas {filter === 'completed' ? 'completadas' : filter === 'active' ? 'activas' : ''}.</p>
-          {filter === 'all' && <p className="empty-hint">¡Agrega tu primera tarea!</p>}
+          <IconEmpty />
+          <p>No hay tareas{filter === 'completed' ? ' completadas' : filter === 'active' ? ' activas' : ''}.</p>
+          {filter === 'all' && <p className="empty-hint">Agrega tu primera tarea</p>}
         </div>
       ) : (
         <div className="task-list">

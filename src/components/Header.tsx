@@ -1,3 +1,5 @@
+﻿import { IconLogo } from './Icons'
+
 interface HeaderProps {
   isOnline: boolean
   completed: number
@@ -11,11 +13,11 @@ export const Header: React.FC<HeaderProps> = ({ isOnline, completed, total }) =>
     <header className="app-header">
       <div className="header-top">
         <div className="header-title">
-          <span className="header-icon">✅</span>
+          <div className="header-icon"><IconLogo /></div>
           <h1>Task Manager</h1>
         </div>
         <span className={`status-badge ${isOnline ? 'online' : 'offline'}`}>
-          {isOnline ? '● Online' : '○ Offline'}
+          {isOnline ? 'Online' : 'Offline'}
         </span>
       </div>
       {total > 0 && (

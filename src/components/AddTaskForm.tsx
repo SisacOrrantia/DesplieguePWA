@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Task } from '../types/Task'
+import { IconPlus } from './Icons'
 
 interface AddTaskFormProps {
   onAdd: (title: string, description: string, priority: Task['priority']) => void
@@ -25,7 +26,7 @@ export const AddTaskForm: React.FC<AddTaskFormProps> = ({ onAdd }) => {
     <div className="add-task-container">
       {!isOpen ? (
         <button className="btn btn-primary add-task-toggle" onClick={() => setIsOpen(true)}>
-          + Nueva Tarea
+          <IconPlus /> Nueva Tarea
         </button>
       ) : (
         <form className="add-task-form" onSubmit={handleSubmit}>
